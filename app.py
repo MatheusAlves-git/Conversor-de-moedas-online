@@ -1,7 +1,9 @@
 import tkinter as tk
-from ObjetosTK import Aplicacao
+from arq import Aplicacao
 
 janela = tk.Tk()
-teste = Aplicacao(janela).grid()
+Aplicacao(janela).grid()
+
+janela.resizable(0, 0)
 
 janela.mainloop()
