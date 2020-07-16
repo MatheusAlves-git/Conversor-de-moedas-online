@@ -30,51 +30,56 @@ class Aplicacao(Frame):
         souap = BeautifulSoup(html_content, 'html.parser')
         table = souap.find(name='table')
 
-        # Finalizando
-        df_full = pd.read_html(str(table).replace(',', '.'))[0]
-        sleep(5)
 
         def conta():
-            print(df_full)
+            # Finalizando
+            df_full = pd.read_html(str(table).replace(',', '.'))[0]
             df_full.head()
             caixa1 = caixa_escolha1.get()
             caixa2 = caixa_escolha2.get()
 
+            print(df_full)
+            
             df_full.set_index('Código', inplace=True)
-
-            df1 = df_full.loc[f'{caixa1}', f'{caixa2}']
+            df_full.loc[f'{caixa1}', f'{caixa2}']
 
             valor_1 = df_full.loc[caixa1, caixa2]
-            print(valor_1)
             valor_2 = df_full.loc[caixa2, caixa1]
+            print(valor_1)
             print(valor_2)
 
-            calc = valor_1 * valor_2
+            convert = float(valor1.get()) * float(valor_1)
 
-            Label(self, text=f'{caixa_escolha2.get()}    {calc}', fg='blue').grid(row=4, column=1)
-            Label(self, text=f'Valor do {caixa_escolha1.get()} perante {caixa_escolha2}:    {valor_1}', fg='red').grid(row=2, column=1)
-            Label(self, text=f'Valor do {caixa_escolha2.get()} perante {caixa_escolha1}:   {valor_2}', fg='red').grid(row=3, column=1)
+            Label(self, text=f'{caixa_escolha2.get()} 1.00 = {caixa_escolha1.get()} {valor_1}', fg='blue').grid(row=2, column=1)
+            Label(self, text=f'{caixa_escolha1.get()} 1.00 = {caixa_escolha2.get()} {valor_2}', fg='blue').grid(row=2, column=4)
+            Label(self, text=f'{caixa_escolha2.get()} {convert:.3f}', fg='black', font=('bold', 12)).grid(row=4, column=0)
 
+        Label(self, text='..............', fg='black', font=('bold', 12)).grid(row=4, column=0)
         bol_val1 = DoubleVar()
         bol_val2 = DoubleVar()
-
-        Label(self, text='Valor de origem:').grid(row=0, column=0)
         valor1 = Entry(self, textvariable=bol_val1)
         valor1.grid(row=0, column=1)
 
+        """
         Label(self, text='Cotação de destino:').grid(row=1, column=0)
+        valor1.grid(row=0, column=1)
+  
         valor2 = Entry(self, textvariable=bol_val2)
         valor2.grid(row=1, column=1)
+        """
 
-        Button(self, text='Somar', command=conta).grid(row=2, column=0)
+        Label(self, text='Valor de origem:').grid(row=0, column=0)
+        Button(self, text='Converter', command=conta).grid(row=2, column=0)
+
+        Label(self, text='Cotação de destino: ').grid(row=0, column=4)  
+        """
         Label(self, text='').grid(row=4, column=0)
         Label(self, text='Convertido para:').grid(row=4, column=0)
-
-        caixa_escolha1 = ttk.Combobox(self, values=['BRL', 'USD', 'EUR', 'GBA', 'JPY', 'CHF', 'CAD', 'AUT'], width=4)
+        """
+        caixa_escolha1 = ttk.Combobox(self, values=['BRL', 'USD', 'EUR', 'GBP', 'JPY', 'CHF', 'CAD', 'AUT'], width=4)
         caixa_escolha1.grid(row=0, column=3)
         caixa_escolha1.current(1)
 
         caixa_escolha2 = ttk.Combobox(self, values=['BRL', 'USD', 'EUR', 'GBA', 'JPY', 'CHF', 'CAD', 'AUT'], width=4)
-        caixa_escolha2.grid(row=1, column=3)
+        caixa_escolha2.grid(row=0, column=5)
         caixa_escolha2.current(1)
-
