@@ -32,21 +32,15 @@ class Aplicacao(Frame):
 
 
         def conta():
-            # Finalizando
+            # Pegando os dados da tabela "df_full" e manipulando-os
             df_full = pd.read_html(str(table).replace(',', '.'))[0]
             df_full.head()
             caixa1 = caixa_escolha1.get()
             caixa2 = caixa_escolha2.get()
-
-            print(df_full)
-            
-            df_full.set_index('Código', inplace=True)
+            df_full.set_index('Código', inplace=True) # Seleciona qual coluna da tabela será usada como refência
             df_full.loc[f'{caixa1}', f'{caixa2}']
-
             valor_1 = df_full.loc[caixa1, caixa2]
             valor_2 = df_full.loc[caixa2, caixa1]
-            print(valor_1)
-            print(valor_2)
 
             convert = float(valor1.get()) * float(valor_1)
 
@@ -56,30 +50,18 @@ class Aplicacao(Frame):
 
         Label(self, text='..............', fg='black', font=('bold', 12)).grid(row=4, column=0)
         bol_val1 = DoubleVar()
-        bol_val2 = DoubleVar()
         valor1 = Entry(self, textvariable=bol_val1)
         valor1.grid(row=0, column=1)
-
-        """
-        Label(self, text='Cotação de destino:').grid(row=1, column=0)
-        valor1.grid(row=0, column=1)
-  
-        valor2 = Entry(self, textvariable=bol_val2)
-        valor2.grid(row=1, column=1)
-        """
 
         Label(self, text='Valor de origem:').grid(row=0, column=0)
         Button(self, text='Converter', command=conta).grid(row=2, column=0)
 
         Label(self, text='Cotação de destino: ').grid(row=0, column=4)  
-        """
-        Label(self, text='').grid(row=4, column=0)
-        Label(self, text='Convertido para:').grid(row=4, column=0)
-        """
-        caixa_escolha1 = ttk.Combobox(self, values=['BRL', 'USD', 'EUR', 'GBP', 'JPY', 'CHF', 'CAD', 'AUT'], width=4)
+
+        caixa_escolha1 = ttk.Combobox(self, values=['BRL', 'USD', 'EUR', 'GBP', 'JPY', 'CHF', 'CAD', 'AUD'], width=4)
         caixa_escolha1.grid(row=0, column=3)
         caixa_escolha1.current(1)
 
-        caixa_escolha2 = ttk.Combobox(self, values=['BRL', 'USD', 'EUR', 'GBA', 'JPY', 'CHF', 'CAD', 'AUT'], width=4)
+        caixa_escolha2 = ttk.Combobox(self, values=['BRL', 'USD', 'EUR', 'GBA', 'JPY', 'CHF', 'CAD', 'AUD'], width=4)
         caixa_escolha2.grid(row=0, column=5)
         caixa_escolha2.current(1)
