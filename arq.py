@@ -42,7 +42,7 @@ class Aplicacao(Frame):
             valor_1 = df_full.loc[caixa1, caixa2]
             valor_2 = df_full.loc[caixa2, caixa1]
 
-            convert = float(valor1.get()) * float(valor_1)
+            convert = float(valor1.get()) / float(valor_1)
 
             Label(self, text=f'{caixa_escolha2.get()} 1.00 = {caixa_escolha1.get()} {valor_1}', fg='blue').grid(row=2, column=1)
             Label(self, text=f'{caixa_escolha1.get()} 1.00 = {caixa_escolha2.get()} {valor_2}', fg='blue').grid(row=2, column=4)
